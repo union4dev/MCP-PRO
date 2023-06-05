@@ -2,3 +2,4 @@ temp/*
 src/*
 runtime/.idea
 runtime/__pycache__
+runtime/decompiles/__pycache__

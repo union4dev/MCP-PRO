@@ -11,7 +11,7 @@ def remap(version, root_dir, java_path):
     t = time.time()
     path = pathlib.Path(f'{os.path.expanduser("~")}/AppData/Roaming/.minecraft/versions/{version}/{version}.jar')
     if path.exists() and path.is_file():
-        shutil.copy(path, '../temp/minecraft_ori.jar')
+        shutil.copy(path, f'{root_dir}/temp/minecraft_ori.jar')
     else:
         print('Failed to found client file...')
         sys.exit(1)
@@ -25,12 +25,14 @@ def remap(version, root_dir, java_path):
         mapping = mapping.resolve()
         special_source = special_source.resolve()
         print(java_path)
-        subprocess.run([f'{java_path}/Java.exe',
-                        '-jar', special_source.__str__(),
-                        '--in-jar', backend.__str__(),
-                        '--out-jar', f'{root_dir}/temp/minecraft_remapped.jar',
-                        '--srg-in', mapping.__str__(),
-                        '-kill-lvt'], check=True, capture_output=False)
+        subprocess.run([
+            f'{java_path}/Java.exe',
+            '-jar', special_source.__str__(),
+            '--in-jar', backend.__str__(),
+            '--out-jar', f'{root_dir}/temp/minecraft_remapped.jar',
+            '--srg-in', mapping.__str__(),
+            '-kill-lvt'
+        ], check=True, stdout=subprocess.STDOUT, capture_output=False)
         print('>> Remapped')
         delta_time = time.time() - t
         print('[REMAP] Done in %.1fs' % delta_time)
