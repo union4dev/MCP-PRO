@@ -8,8 +8,9 @@ def main():
     root_dir = init.resolve_runtime_dir(runtime_dir)
     java_path = init.check_java_version()
     version = init.get_version_from_cfg(root_dir)
-    remapper.remap(version, root_dir, java_path)
-    cfr_helper.apply_cfr(root_dir, java_path)
+    #remapper.remap(version, root_dir, java_path)
+    #cfr_helper.apply_cfr(root_dir, java_path)
+    cfr_helper.get_cfr_errors(root_dir)
 
 
 if __name__ == '__main__':

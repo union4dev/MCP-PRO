@@ -25,3 +25,35 @@ def apply_cfr(root_dir, java_path):
     else:
         print('[DECOMP/CFR] Missing files...')
         sys.exit(1)
+
+
+def get_cfr_errors(root_dir):
+    print('>> Try to get cfr decompile failed messages')
+    summary = pathlib.Path(f'{root_dir}/temp/cfr_decompiled/summary.txt')
+    if summary.exists() and summary.is_file():
+        summary = summary.resolve()
+        with open(summary.__str__(), encoding='utf-8', mode='r') as reading_file:
+            lines = reading_file.readlines()
+            errors = []
+            counter = 0
+            for line in lines:
+                if (line.__contains__('Unable to fully structure code')
+                    or line.__contains__('Exception : org.benf.cfr.reader')) \
+                        and counter >= 4:
+                    error_code = line.replace('\n', '').replace(' ', '')
+                    error_method = lines[counter - 1].replace('\n', '').replace(' ', '')
+                    error_class = lines[counter - 4].replace('\n', '').replace(' ', '')
+                    errors.append(ErrorData(error_code, error_method, error_class))
+
+                counter = counter + 1
+            return errors
+    else:
+        print('[DECOMP/FIXER] Missing files...')
+        sys.exit(1)
+
+
+class ErrorData(object):
+    def __init__(self, error_code, error_method, error_class):
+        self.error_code = error_code
+        self.error_method = error_method
+        self.error_class = error_class
