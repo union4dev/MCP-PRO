@@ -9,6 +9,9 @@ def apply_cfr(root_dir, java_path):
     t = time.time()
     remapped = pathlib.Path(f'{root_dir}/temp/minecraft_remapped.jar')
     cfr = pathlib.Path(f'{root_dir}/runtime/bin/cfr-0.152.jar')
+    cfr_decomp = pathlib.Path(f'{root_dir}/temp/cfr_decompiled')
+    if not cfr_decomp.exists():
+        cfr_decomp.mkdir()
     if remapped.exists() and remapped.is_file() and cfr.exists() and cfr.is_file():
         remapped = remapped.resolve()
         cfr = cfr.resolve()

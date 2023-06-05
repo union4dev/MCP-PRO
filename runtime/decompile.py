@@ -1,6 +1,6 @@
 import init
 import remapper
-from decompiles import cfr_helper
+from decompiles import cfr_helper, fernflower_helper
 
 
 def main():
@@ -10,7 +10,8 @@ def main():
     version = init.get_version_from_cfg(root_dir)
     remapper.remap(version, root_dir, java_path)
     cfr_helper.apply_cfr(root_dir, java_path)
-    cfr_helper.get_cfr_errors(root_dir)
+    errors = cfr_helper.get_cfr_errors(root_dir)
+    fernflower_helper.apply_fern_flower(root_dir, java_path)
 
 
 if __name__ == '__main__':
