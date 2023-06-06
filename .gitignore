@@ -1,5 +1,7 @@
-temp/*
-src/*
+temp/cfr_decompiled
+temp/ff_decompiled
+temp/*.jar
+src/minecraft
 runtime/.idea
 runtime/__pycache__
 runtime/decompiles/__pycache__
